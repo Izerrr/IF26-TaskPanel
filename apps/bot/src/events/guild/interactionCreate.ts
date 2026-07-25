@@ -3,6 +3,7 @@ import { ExtendedClient } from "../../types.js";
 
 export default {
   name: "interactionCreate",
+  // 1. Event dari Discord mengirim (interaction, client)
   async execute(interaction: Interaction, client: ExtendedClient) {
     if (!interaction.isChatInputCommand()) return;
 
@@ -10,10 +11,12 @@ export default {
     if (!command) return;
 
     try {
+      // 2. TAPI File Command kamu (ping.ts dll) mintanya (client, interaction)
+      // Jadi kita lemparnya WAJIB (client, interaction)
       if (typeof command.execute === "function") {
-        await command.execute(interaction, client);
+        await command.execute(client, interaction);
       } else if (typeof command.run === "function") {
-        await command.run(interaction, client, []);
+        await command.run(client, interaction, []);
       } else {
         console.error(`❌ Command ${interaction.commandName} tidak valid.`);
       }
