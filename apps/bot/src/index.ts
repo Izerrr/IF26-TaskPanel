@@ -8,6 +8,13 @@ const client = new ExtendedClient({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
 
+console.log("--- DEBUG ENV ---");
+console.log("TOKEN EXISTS:", !!process.env.DISCORD_BOT_TOKEN);
+console.log("TOKEN LENGTH:", process.env.DISCORD_BOT_TOKEN?.length);
+console.log("-----------------");
+
+client.login(process.env.DISCORD_BOT_TOKEN);
+
 async function main() {
   await loadEvents(client);
   await loadCommands(client);
