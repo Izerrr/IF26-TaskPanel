@@ -1,26 +1,37 @@
 import { Interaction } from "discord.js";
 import { ExtendedClient } from "../../types.js";
 
-export const execute = async (interaction: Interaction, client: ExtendedClient) => {
-  if (!interaction.isChatInputCommand()) return;
+export default {
+  name: "interactionCreate",
+  async execute(client: ExtendedClient, interaction: Interaction) {
+    if (!interaction.isChatInputCommand()) return;
 
-  const command = client.commands.get(interaction.commandName);
-  if (!command) return;
+    // Cast ke type any sementara biar TypeScript gak rewel
+    const command = client.commands.get(interaction.commandName) as any;
+    if (!command) return;
 
-  try {
-    // args is empty here — slash options are read directly off the
-    // interaction inside each command's run(), via context.options.
-    await command.run(client, interaction, []);
-  } catch (error) {
-    console.error(error);
-    const errorPayload = {
-      content: "❌ Terjadi kesalahan saat menjalankan command ini!",
-      ephemeral: true,
-    };
-    if (interaction.replied || interaction.deferred) {
-      await interaction.followUp(errorPayload);
-    } else {
-      await interaction.reply(errorPayload);
+    try {
+      // Prioritaskan execute, jika tidak ada panggil run dengan 3 argumen
+      if (typeof command.execute === "function") {
+        await command.execute(client, interaction);
+      } else if (typeof command.run === "function") {
+        await command.run(client, interaction, []);
+      } else {
+        console.error(`❌ Command ${interaction.commandName} tidak memiliki method execute/run!`);
+      }
+    } catch (error) {
+      console.error(`❌ Error executing /${interaction.commandName}:`, error);
+
+      const errorMessage = {
+        content: "Terjadi kesalahan saat menjalankan perintah ini!",
+        ephemeral: true,
+      };
+
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp(errorMessage).catch(() => {});
+      } else {
+        await interaction.reply(errorMessage).catch(() => {});
+      }
     }
-  }
+  },
 };
