@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
 import { REST, Routes } from "discord.js";
-import { ExtendedClient, Command } from "../types.js";
+import { ExtendedClient } from "../types.js";
 
 export async function loadCommands(client: ExtendedClient) {
   const commandsPath = path.join(__dirname, "..", "commands");
@@ -20,18 +20,29 @@ export async function loadCommands(client: ExtendedClient) {
     for (const file of commandFiles) {
       const filePath = path.join(categoryPath, file);
       const commandModule = await import(pathToFileURL(filePath).href);
-      const command: Command = commandModule.default || commandModule;
 
-      // Cek apakah ada 'execute' ATAU 'run'
-      const hasExecute = command && "data" in command && ("execute" in command || "run" in command);
+      // Ambil objek command dengan mengecek .default ataupun modul langsung
+      const command = commandModule.default?.default || commandModule.default || commandModule;
 
-      if (hasExecute) {
+      // Cek apakah data & fungsi eksekusi ada
+      const hasData = command && (command.data || command.name);
+      const hasExec = command && (typeof command.execute === "function" || typeof command.run === "function");
+
+      if (hasData && hasExec) {
         command.category ??= category;
-        client.commands.set(command.data.name, command);
-        slashCommandsData.push(command.data.toJSON());
-        console.log(`✅ Loaded command: [${category}] ${command.data.name}`);
+        const cmdName = command.data?.name || command.name;
+
+        client.commands.set(cmdName, command);
+
+        if (command.data && typeof command.data.toJSON === "function") {
+          slashCommandsData.push(command.data.toJSON());
+        } else if (command.data) {
+          slashCommandsData.push(command.data);
+        }
+
+        console.log(`✅ Loaded command: [${category}] ${cmdName}`);
       } else {
-        console.warn(`⚠️  Skipping ${category}/${file} — missing "data" or "execute/run" export.`);
+        console.warn(`⚠️  Skipping ${category}/${file} — Invalid command structure.`);
       }
     }
   }
