@@ -21,14 +21,14 @@ export function createWelcomeEmbed(member: GuildMember, guild: Guild): EmbedBuil
     .setTitle(`Welcome ${member.user.username}!`)
     .setThumbnail(member.user.displayAvatarURL({ size: 512 }))
     .setDescription(
-      `Selamat datang di server insyaallah halal!\n` +
+      `Selamat datang di server !\n` +
         `⊱━━━━━━━ « ⋅ʚ♡ɞ⋅ » ━━━━━━━━⊰\n` +
         `<:Check:797756159783337984> Jangan lupa untuk membaca ${rulesChannel ?? "#rules"} dan ${infoChannel ?? "#info"} terlebih dahulu!\n\n` +
         `<:Check:797756159783337984> Ambil Role kalian di ${rolesChannel ?? "#roles"}\n\n` +
         `<:Check:797756159783337984> Setelah semua selesai, kalian bisa memulai percakapan di ${chatChannel ?? "#chat"}\n` +
         `⊱━━━━━━━ « ⋅ʚ♡ɞ⋅ » ━━━━━━━━⊰\n\n` +
         `*Jika masih ada pertanyaan, silahkan menghubungi <@&795909896532787230>, <@&796692841526067210>, atau <@&802136385149468682>\n\n` +
-        `<:BlobCoy:797889947998093322> Enjoy your Stay! <:BlobCoy:797889947998093322>`
+        `<:BlobCoy:797889947998093322> Enjoy your Stay! <:BlobCoy:797889947998093322>`,
     )
     .setImage(FOOTER_ICON)
     .setFooter({ text: FOOTER_TEXT, iconURL: FOOTER_ICON })

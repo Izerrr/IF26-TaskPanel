@@ -18,11 +18,11 @@ const command: Command = {
       .setThumbnail(FOOTER_ICON)
       .addFields(
         { name: "➤ Janken", value: "`/janken` atau `a!janken`" },
-        { name: "➤ Tanya AVIVIION Helper", value: "`/tanya` atau `a!tanya`" },
+        { name: "➤ Tanya IF26 Helper", value: "`/tanya` atau `a!tanya`" },
         { name: "➤ Meme", value: "`/meme` atau `a!meme`" },
         { name: "➤ Hug", value: "`/hug` atau `a!hug @user`" },
         { name: "➤ Pat", value: "`/pat` atau `a!pat @user`" },
-        { name: "➤ Wink", value: "`/wink` atau `a!wink`" }
+        { name: "➤ Wink", value: "`/wink` atau `a!wink`" },
       )
       .setImage(FOOTER_ICON)
       .setTimestamp()

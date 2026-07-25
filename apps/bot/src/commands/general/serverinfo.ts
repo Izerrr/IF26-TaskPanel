@@ -5,11 +5,9 @@ import { AUTHOR_ICON, AUTHOR_NAME, BRAND_COLOR, FOOTER_ICON, FOOTER_TEXT } from 
 
 const command: Command = {
   name: "serverinfo",
-  description: "Menampilkan statistik dan informasi server AVIVIION",
+  description: "Menampilkan statistik dan informasi server IF26",
   category: "general",
-  data: new SlashCommandBuilder()
-    .setName("serverinfo")
-    .setDescription("Menampilkan statistik dan informasi server AVIVIION"),
+  data: new SlashCommandBuilder().setName("serverinfo").setDescription("Menampilkan statistik dan informasi server IF26"),
 
   async run(client, context) {
     const guild = context.guild;
@@ -41,16 +39,14 @@ const command: Command = {
         { name: "➤ Verified", value: guild.verified ? "Yes ✅" : "No ❌", inline: true },
         {
           name: "➤ Boosters",
-          value: guild.premiumSubscriptionCount && guild.premiumSubscriptionCount >= 1
-            ? `${guild.premiumSubscriptionCount} boosters`
-            : "No boosters",
+          value: guild.premiumSubscriptionCount && guild.premiumSubscriptionCount >= 1 ? `${guild.premiumSubscriptionCount} boosters` : "No boosters",
           inline: true,
         },
         {
           name: "➤ Emojis",
           value: guild.emojis.cache.size >= 1 ? `${guild.emojis.cache.size} emojis` : "No emojis",
           inline: true,
-        }
+        },
       )
       .setImage(FOOTER_ICON)
       .setTimestamp()

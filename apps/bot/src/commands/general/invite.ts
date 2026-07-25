@@ -6,18 +6,12 @@ import { BRAND_COLOR } from "../../lib/constants.js";
 const command: Command = {
   name: "invite",
   description: "Mendapatkan tautan undangan resmi untuk bot ini",
-  data: new SlashCommandBuilder()
-    .setName("invite")
-    .setDescription("Mendapatkan tautan undangan resmi untuk bot ini"),
+  data: new SlashCommandBuilder().setName("invite").setDescription("Mendapatkan tautan undangan resmi untuk bot ini"),
 
   async run(client, context) {
     const inviteLink = `https://discord.com/api/oauth2/authorize?client_id=${client.user?.id}&permissions=8&scope=bot%20applications.commands`;
 
-    const embed = new EmbedBuilder()
-      .setTitle("🔗 Invite AVIVIION Helper")
-      .setDescription(`Klik [Di Sini](${inviteLink}) untuk mengundang bot ini ke server kamu!`)
-      .setColor(BRAND_COLOR)
-      .setTimestamp();
+    const embed = new EmbedBuilder().setTitle("🔗 Invite IF26 Helper").setDescription(`Klik [Di Sini](${inviteLink}) untuk mengundang bot ini ke server kamu!`).setColor(BRAND_COLOR).setTimestamp();
 
     await reply(context, { embeds: [embed] });
   },

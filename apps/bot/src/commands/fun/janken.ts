@@ -29,9 +29,7 @@ const command: Command = {
       .setTimestamp()
       .setFooter({ text: `${FOOTER_TEXT} | Command requested by: ${author.tag}`, iconURL: FOOTER_ICON });
 
-    const msg = isSlash(context)
-      ? await context.reply({ embeds: [embed], fetchReply: true })
-      : await sendChannel(context.channel, { embeds: [embed] });
+    const msg = isSlash(context) ? await context.reply({ embeds: [embed], fetchReply: true }) : await sendChannel(context.channel, { embeds: [embed] });
 
     if (!msg) return;
 
@@ -43,8 +41,7 @@ const command: Command = {
 
     try {
       const collected = await msg.awaitReactions({
-        filter: (reaction: MessageReaction, user: User | PartialUser) =>
-          CHOICES.includes(reaction.emoji.name as Choice) && user.id === author.id,
+        filter: (reaction: MessageReaction, user: User | PartialUser) => CHOICES.includes(reaction.emoji.name as Choice) && user.id === author.id,
         max: 1,
         time: 60_000,
         errors: ["time"],
@@ -58,10 +55,7 @@ const command: Command = {
         .setAuthor({ name: AUTHOR_NAME, iconURL: AUTHOR_ICON })
         .setTitle("Hasil Janken!")
         .setThumbnail(FOOTER_ICON)
-        .addFields(
-          { name: "Pilihan kamu", value: playerChoice },
-          { name: "Pilihan AVIVIION Helper", value: me }
-        )
+        .addFields({ name: "Pilihan kamu", value: playerChoice }, { name: "Pilihan IF26 Helper", value: me })
         .setColor(BRAND_COLOR)
         .setTimestamp()
         .setFooter({ text: `${FOOTER_TEXT} | Command requested by: ${author.tag}`, iconURL: FOOTER_ICON });

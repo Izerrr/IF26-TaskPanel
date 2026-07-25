@@ -9,9 +9,7 @@ const command: Command = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Menampilkan daftar semua perintah bot")
-    .addStringOption((option) =>
-      option.setName("command").setDescription("Nama perintah spesifik untuk info lebih detail").setRequired(false)
-    ),
+    .addStringOption((option) => option.setName("command").setDescription("Nama perintah spesifik untuk info lebih detail").setRequired(false)),
 
   async run(client, context, args) {
     const commandName = getStringArg(context, args, "command") ?? args[0] ?? null;
@@ -32,7 +30,7 @@ const command: Command = {
         .addFields(
           { name: "Deskripsi", value: target.description || "Tidak ada deskripsi." },
           { name: "Kategori", value: target.category || "General" },
-          { name: "Aliases", value: target.aliases?.length ? target.aliases.join(", ") : "Tidak ada" }
+          { name: "Aliases", value: target.aliases?.length ? target.aliases.join(", ") : "Tidak ada" },
         )
         .setTimestamp();
 
@@ -47,11 +45,7 @@ const command: Command = {
       (categories[cat] ??= []).push(`\`${cmd.name}\``);
     });
 
-    const embed = new EmbedBuilder()
-      .setTitle("📚 Menu Perintah AVIVIION Helper")
-      .setDescription("Gunakan `/help [nama_command]` untuk melihat detail per-command.")
-      .setColor(BRAND_COLOR)
-      .setTimestamp();
+    const embed = new EmbedBuilder().setTitle("📚 Menu Perintah IF26 Helper").setDescription("Gunakan `/help [nama_command]` untuk melihat detail per-command.").setColor(BRAND_COLOR).setTimestamp();
 
     for (const [category, cmds] of Object.entries(categories)) {
       embed.addFields({ name: `➤ ${category.toUpperCase()}`, value: cmds.join(", "), inline: false });

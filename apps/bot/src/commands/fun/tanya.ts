@@ -14,20 +14,18 @@ const ANSWERS = [
   "Kayaknya nggak deh...",
   "Sudah jelas iya!",
   "50/50, siapa tau?",
-  "AVIVIION Helper rasa iya!",
-  "AVIVIION Helper rasa tidak...",
+  "IF26 Helper rasa iya!",
+  "IF26 Helper rasa tidak...",
 ];
 
 const command: Command = {
   name: "tanya",
   category: "fun",
-  description: "Tanya AVIVIION Helper pertanyaan apapun!",
+  description: "Tanya IF26 Helper pertanyaan apapun!",
   data: new SlashCommandBuilder()
     .setName("tanya")
-    .setDescription("Tanya AVIVIION Helper pertanyaan apapun!")
-    .addStringOption((option) =>
-      option.setName("pertanyaan").setDescription("Pertanyaan yang ingin kamu tanyakan").setRequired(true)
-    ),
+    .setDescription("Tanya IF26 Helper pertanyaan apapun!")
+    .addStringOption((option) => option.setName("pertanyaan").setDescription("Pertanyaan yang ingin kamu tanyakan").setRequired(true)),
 
   async run(client, context, args) {
     const author = getAuthor(context);
@@ -45,8 +43,8 @@ const command: Command = {
     const embed = new EmbedBuilder()
       .setColor(BRAND_COLOR)
       .setAuthor({ name: AUTHOR_NAME, iconURL: AUTHOR_ICON })
-      .setTitle("🔮 Tanya AVIVIION Helper")
-      .addFields({ name: "Pertanyaan", value: question }, { name: "Jawaban AVIVIION Helper", value: answer })
+      .setTitle("🔮 Tanya IF26 Helper")
+      .addFields({ name: "Pertanyaan", value: question }, { name: "Jawaban IF26 Helper", value: answer })
       .setTimestamp()
       .setFooter({ text: `${FOOTER_TEXT} | Command requested by: ${author.tag}`, iconURL: FOOTER_ICON });
 
