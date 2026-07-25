@@ -7,9 +7,8 @@
 // `directUrl` is used only for migrations, which need a direct (non-pooled) connection.
 
 datasource db {
-  provider  = "postgresql" // switch to "mysql" if you're hosting MySQL on the VPS
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
