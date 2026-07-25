@@ -1,12 +1,17 @@
-import { Client, GatewayIntentBits } from "discord.js";
+import "dotenv/config";
+import { GatewayIntentBits } from "discord.js";
+import { ExtendedClient } from "./types.js";
+import { loadEvents } from "./handlers/eventHandler.js";
+import { loadCommands } from "./handlers/commandHandler.js";
 
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+const client = new ExtendedClient({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 });
 
-client.once("ready", () => {
-  console.log(`🤖 Bot online! Logged in as ${client.user?.tag}`);
-});
+async function main() {
+  await loadEvents(client);
+  await loadCommands(client);
+  await client.login(process.env.DISCORD_BOT_TOKEN);
+}
 
-// Login pakai token dari file .env
-client.login(process.env.DISCORD_BOT_TOKEN);
+main();

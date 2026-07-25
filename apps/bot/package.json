@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "@if26/database": "workspace:*",
-    "discord.js": "^14.16.0"
+    "discord.js": "^14.16.0",
+    "dotenv": "^17.4.2"
   },
   "devDependencies": {
+    "@types/node": "^20.19.43",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.0",
-    "@types/node": "^20.0.0"
+    "typescript": "^5.6.0"
   }
 }
