@@ -1,5 +1,5 @@
 import { Interaction } from "discord.js";
-import { ExtendedClient } from "../types.js";
+import { ExtendedClient } from "../../types.js";
 
 export const execute = async (interaction: Interaction, client: ExtendedClient) => {
   if (!interaction.isChatInputCommand()) return;

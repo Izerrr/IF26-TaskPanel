@@ -1,4 +1,4 @@
-import { ExtendedClient } from "../types.js";
+import { ExtendedClient } from "../../types.js";
 
 export const once = true;
 export const execute = (client: ExtendedClient) => {
