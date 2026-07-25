@@ -1,10 +1,13 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath, pathToFileURL } from "url";
 import { REST, Routes } from "discord.js";
 import { ExtendedClient, Command } from "../types.js";
 
+const baseDir = __dirname;
+
 export async function loadCommands(client: ExtendedClient) {
-  const commandsPath = path.join(process.cwd(), "src/commands");
+  const commandsPath = path.join(__dirname, "..", "commands");
   if (!fs.existsSync(commandsPath)) return;
 
   const categories = fs.readdirSync(commandsPath);
@@ -18,20 +21,25 @@ export async function loadCommands(client: ExtendedClient) {
 
     for (const file of commandFiles) {
       const filePath = path.join(categoryPath, file);
-      const commandModule = await import(`file://${filePath}`);
+      const commandModule = await import(pathToFileURL(filePath).href);
       const command: Command = commandModule.default;
 
-      if (command && "data" in command && "execute" in command) {
+      if (command && "data" in command && "run" in command) {
+        command.category ??= category;
         client.commands.set(command.data.name, command);
         slashCommandsData.push(command.data.toJSON());
+      } else {
+        console.warn(`⚠️  Skipping ${category}/${file} — missing "data" or "run" export.`);
       }
     }
   }
 
   const rest = new REST().setToken(process.env.DISCORD_BOT_TOKEN!);
   try {
-    console.log("🔄 Registering Slash Commands to Discord API...");
-    await rest.put(Routes.applicationCommands(process.env.DISCORD_CLIENT_ID!), { body: slashCommandsData });
+    console.log(`🔄 Registering ${slashCommandsData.length} slash commands to Discord API...`);
+    await rest.put(Routes.applicationCommands(process.env.DISCORD_CLIENT_ID!), {
+      body: slashCommandsData,
+    });
     console.log("✅ Slash Commands registered successfully!");
   } catch (error) {
     console.error("❌ Failed to register commands:", error);

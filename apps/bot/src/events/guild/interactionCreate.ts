@@ -8,12 +8,19 @@ export const execute = async (interaction: Interaction, client: ExtendedClient) 
   if (!command) return;
 
   try {
-    await command.execute(interaction);
+    // args is empty here — slash options are read directly off the
+    // interaction inside each command's run(), via context.options.
+    await command.run(client, interaction, []);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
+    const errorPayload = {
       content: "❌ Terjadi kesalahan saat menjalankan command ini!",
       ephemeral: true,
-    });
+    };
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp(errorPayload);
+    } else {
+      await interaction.reply(errorPayload);
+    }
   }
 };

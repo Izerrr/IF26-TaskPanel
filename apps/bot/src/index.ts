@@ -5,15 +5,14 @@ import { loadEvents } from "./handlers/eventHandler.js";
 import { loadCommands } from "./handlers/commandHandler.js";
 
 const client = new ExtendedClient({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildMembers,
+  ],
 });
-
-console.log("--- DEBUG ENV ---");
-console.log("TOKEN EXISTS:", !!process.env.DISCORD_BOT_TOKEN);
-console.log("TOKEN LENGTH:", process.env.DISCORD_BOT_TOKEN?.length);
-console.log("-----------------");
-
-client.login(process.env.DISCORD_BOT_TOKEN);
 
 async function main() {
   await loadEvents(client);

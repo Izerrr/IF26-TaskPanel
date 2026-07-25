@@ -10,10 +10,15 @@
   "dependencies": {
     "@if26/database": "workspace:*",
     "discord.js": "^14.16.0",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "opusscript": "^0.1.1"
   },
   "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/mathjs": "^9.4.2",
+    "@types/ms": "^2.1.0",
     "@types/node": "^20.19.43",
+    "@types/node-fetch": "^2.6.13",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0"
   }
