@@ -19,16 +19,19 @@ export async function loadEvents(client: ExtendedClient) {
       const filePath = path.join(folderPath, file);
       const eventModule = await import(pathToFileURL(filePath).href);
 
-      // FIX: Ambil event object dengan pengecekan fallback
-      const event = eventModule.default?.default || eventModule.default || eventModule;
+      // Pengecekan ekstra lapis untuk nangkep berbagai gaya export
+      const event = eventModule.default?.default || eventModule.default || eventModule.event || eventModule;
 
-      if (event && event.name && typeof event.execute === "function") {
+      const eventName = event?.name || event?.eventName;
+      const execFunc = event?.execute || event?.run;
+
+      if (eventName && typeof execFunc === "function") {
         if (event.once) {
-          client.once(event.name, (...args) => event.execute(...args, client));
+          client.once(eventName, (...args) => execFunc(...args, client));
         } else {
-          client.on(event.name, (...args) => event.execute(...args, client));
+          client.on(eventName, (...args) => execFunc(...args, client));
         }
-        console.log(`✅ Loaded event: [${folder}] ${event.name}`);
+        console.log(`✅ Loaded event: [${folder}] ${eventName}`);
       } else {
         console.warn(`⚠️  Skipping ${filePath} — missing "name" or "execute" export.`);
       }
