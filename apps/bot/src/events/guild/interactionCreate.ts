@@ -3,15 +3,14 @@ import { ExtendedClient } from "../../types.js";
 
 export default {
   name: "interactionCreate",
-  async execute(client: ExtendedClient, interaction: Interaction) {
+  // 💡 TUKAR URUTAN PARAMETER: interaction DULU, BARU client
+  async execute(interaction: Interaction, client: ExtendedClient) {
     if (!interaction.isChatInputCommand()) return;
 
-    // Cast ke type any sementara biar TypeScript gak rewel
-    const command = client.commands.get(interaction.commandName) as any;
+    const command = client.commands?.get(interaction.commandName) as any;
     if (!command) return;
 
     try {
-      // Prioritaskan execute, jika tidak ada panggil run dengan 3 argumen
       if (typeof command.execute === "function") {
         await command.execute(client, interaction);
       } else if (typeof command.run === "function") {
