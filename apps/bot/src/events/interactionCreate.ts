@@ -11,6 +11,9 @@ export const execute = async (interaction: Interaction, client: ExtendedClient) 
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({ content: "Ada error saat menjalankan command ini!", ephemeral: true });
+    await interaction.reply({
+      content: "❌ Terjadi kesalahan saat menjalankan command ini!",
+      ephemeral: true,
+    });
   }
 };

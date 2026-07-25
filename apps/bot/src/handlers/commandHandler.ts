@@ -18,19 +18,19 @@ export async function loadCommands(client: ExtendedClient) {
 
     for (const file of commandFiles) {
       const filePath = path.join(categoryPath, file);
-      const command: Command = (await import(`file://${filePath}`)).default;
+      const commandModule = await import(`file://${filePath}`);
+      const command: Command = commandModule.default;
 
-      if ("data" in command && "execute" in command) {
+      if (command && "data" in command && "execute" in command) {
         client.commands.set(command.data.name, command);
         slashCommandsData.push(command.data.toJSON());
       }
     }
   }
 
-  // Register Slash Commands ke Discord REST API
   const rest = new REST().setToken(process.env.DISCORD_BOT_TOKEN!);
   try {
-    console.log("🔄 Registering Slash Commands...");
+    console.log("🔄 Registering Slash Commands to Discord API...");
     await rest.put(Routes.applicationCommands(process.env.DISCORD_CLIENT_ID!), { body: slashCommandsData });
     console.log("✅ Slash Commands registered successfully!");
   } catch (error) {
