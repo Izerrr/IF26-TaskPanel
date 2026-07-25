@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-steam-bg text-steam-text font-sans antialiased;
+  }
+
+  /* Uppercase font-mono for metadata, tags, task IDs, status badges — design.md #3 */
+  .steam-meta {
+    @apply font-mono uppercase tracking-wide text-xs;
+  }
+}

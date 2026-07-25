@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Next.js build output
+.next/
+out/
+
+# Bot build output
+dist/
+
+# Environment Variables (SANGAT RAHASIA!)
+.env
+.env.local
+.env.production
+*.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+pm2.log
+
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db

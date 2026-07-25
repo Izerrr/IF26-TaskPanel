@@ -1,0 +1,21 @@
+{
+  "name": "if26-task-panel",
+  "private": true,
+  "version": "1.0.0",
+  "description": "IF26 Task Panel — Hybrid Discord Bot + Next.js Kanban Dashboard (Steam Client UI)",
+  "scripts": {
+    "dev:dashboard": "pnpm --filter @if26/dashboard dev",
+    "dev:bot": "pnpm --filter @if26/bot dev",
+    "build:dashboard": "pnpm --filter @if26/dashboard build",
+    "build:bot": "pnpm --filter @if26/bot build",
+    "db:generate": "pnpm --filter @if26/database prisma generate",
+    "db:push": "pnpm --filter @if26/database prisma db push",
+    "db:migrate": "pnpm --filter @if26/database prisma migrate dev",
+    "db:studio": "pnpm --filter @if26/database prisma studio"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "pnpm@9.0.0"
+}
