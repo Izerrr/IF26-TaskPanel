@@ -20,7 +20,7 @@ export async function loadCommands(client: ExtendedClient) {
     for (const file of commandFiles) {
       const filePath = path.join(categoryPath, file);
       const commandModule = await import(pathToFileURL(filePath).href);
-      const command: Command = commandModule.default;
+      const command: Command = commandModule.default || commandModule;
 
       // Cek apakah ada 'execute' ATAU 'run'
       const hasExecute = command && "data" in command && ("execute" in command || "run" in command);
