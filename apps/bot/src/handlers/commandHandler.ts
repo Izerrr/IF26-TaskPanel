@@ -1,10 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath, pathToFileURL } from "url";
+import { pathToFileURL } from "url";
 import { REST, Routes } from "discord.js";
 import { ExtendedClient, Command } from "../types.js";
-
-const baseDir = __dirname;
 
 export async function loadCommands(client: ExtendedClient) {
   const commandsPath = path.join(__dirname, "..", "commands");
@@ -24,12 +22,16 @@ export async function loadCommands(client: ExtendedClient) {
       const commandModule = await import(pathToFileURL(filePath).href);
       const command: Command = commandModule.default;
 
-      if (command && "data" in command && "run" in command) {
+      // Cek apakah ada 'execute' ATAU 'run'
+      const hasExecute = command && "data" in command && ("execute" in command || "run" in command);
+
+      if (hasExecute) {
         command.category ??= category;
         client.commands.set(command.data.name, command);
         slashCommandsData.push(command.data.toJSON());
+        console.log(`✅ Loaded command: [${category}] ${command.data.name}`);
       } else {
-        console.warn(`⚠️  Skipping ${category}/${file} — missing "data" or "run" export.`);
+        console.warn(`⚠️  Skipping ${category}/${file} — missing "data" or "execute/run" export.`);
       }
     }
   }
