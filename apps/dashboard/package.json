@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@if26/database": "workspace:*",
     "@hello-pangea/dnd": "^17.0.0",
+    "@if26/database": "workspace:*",
+    "@prisma/client": "^5.20.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.27.0",
     "next": "^14.2.0",
     "next-auth": "^4.24.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0",
-    "clsx": "^2.1.1"
+    "react-dom": "^18.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
@@ -23,6 +25,7 @@
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
+    "prisma": "^5.20.0",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.0"
   }

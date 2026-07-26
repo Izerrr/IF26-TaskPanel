@@ -7,7 +7,7 @@
 // `directUrl` is used only for migrations, which need a direct (non-pooled) connection.
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
